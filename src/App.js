@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import './App.css';
 import SA_template from './SA_Template';

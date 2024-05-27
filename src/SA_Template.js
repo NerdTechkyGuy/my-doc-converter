@@ -5,9 +5,6 @@ import { saveAs } from "file-saver";
 import htmlDocx from "html-docx-js/dist/html-docx";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-//  "html-docx-js": "^0.5.2",
- import { Document, Packer, Paragraph, TextRun, PageBreak } from 'docx';
-
 
 const DocConverter = () => {
   const contentRef = useRef();
