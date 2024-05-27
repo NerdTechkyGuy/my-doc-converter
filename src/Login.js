@@ -1,5 +1,6 @@
 // Login.js
 import React, { useState } from 'react';
+import '../src/login.css'
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
@@ -16,7 +17,7 @@ function Login({ onLogin }) {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2 className='login-h1-tag-css'>Login</h2>
       <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button onClick={handleLogin}>Login</button>
