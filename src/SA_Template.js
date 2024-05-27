@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import htmlDocx from "html-docx-js/dist/html-docx";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import '../src/sa_template.css'
 
 const DocConverter = () => {
   const contentRef = useRef();
@@ -74,24 +75,7 @@ const DocConverter = () => {
     // .replace(/\[affidavit\]/, `${newParagraph}`);
     .replace(/\[affidavit\]/, `${newParagraph.replace(/\n/g, '<br/>')}`); // Convert new lines to <br/>
 
-      //  const docx = htmlDocx.asBlob(updatedContent);
-      //  saveAs(docx, "SA_Template.docx");
-    //   const styledContent = `
-    //   <html>
-    //     <head>
-    //       <style>
-    //         body {
-    //           font-family: 'Courier New', Courier, monospace;
-    //           font-size: 18.5px;
-    //           line-height: 2.5;
-    //         }
-    //       </style>
-    //     </head>
-    //     <body>
-    //       ${updatedContent}
-    //     </body>
-    //   </html>
-    // `;
+   
     const styledContent = `
       <html>
         <head>
@@ -124,87 +108,9 @@ const DocConverter = () => {
     };
 
 
-    // const handleAddParagraph = (event) => {
-    //   event.preventDefault(); // Prevent page refresh
-    //   setNewParagraphs([...newParagraphs, { id: newParagraphs.length, text: '' }]);
-    // };
-  
-    // const handleParagraphChange = (index, value) => {
-    //   const updatedParagraphs = [...paragraphs];
-    //   updatedParagraphs[index] = value;
-    //   setParagraphs(updatedParagraphs);
-    // };
-    
-  
-    // const handleParagraphChange = (index, value) => {
-    //   const updatedParagraphs = [...newParagraphs];
-    //   updatedParagraphs[index] = value;
-    //   setNewParagraphs(updatedParagraphs);
-    // };
-
-  
-    // const handleDeleteParagraph = (index) => {
-    //   const updatedParagraphs = newParagraphs.filter((_, i) => i !== index);
-    //   setNewParagraphs(updatedParagraphs.map((paragraph, idx) => ({ ...paragraph, id: idx })));
-    // };
-        
-    
-  
-    // const handleSaveParagraphs = () => {
-    //   setParagraphs([...paragraphs, ...newParagraphs]);
-    //   setNewParagraphs([]);
-    // };
-  
- 
-    // const handleParagraphChange = (e) => {
-    //   setNewParagraph(e.target.value);
-    // };
-    // const handleParagraphChange = (event) => {
-    //   const inputValue = event.target.value;
-    //   // Replace consecutive numbers followed by a dot and space with a newline
-    //   const formattedContent = inputValue.replace(/(\d+\.\s)\d+\.\s/g, '$1\n');
-    //   // Update the state with the formatted content
-    //   setNewParagraph(formattedContent);
-    // };
-
-  // const handleParagraphChange = (event) => {
-  //   const inputValue = event.target.value;
-  //   setNewParagraph(inputValue);
-  // };
-
-  // const handleKeyDown = (event) => {
-  //   if (event.key === 'Enter') {
-  //     event.preventDefault();
-  //     insertNewNumberedLine();
-  //   } 
-  // };
-
-  // const insertNewNumberedLine = () => {
-  //   const lines = newParagraph.split('\n');
-  //   const lastLine = lines[lines.length - 1];
-  //   const match = lastLine.match(/^(\d+)\.\s+/);
-
-  //   let nextNumber = 1;
-  //   if (match) {
-  //     nextNumber = parseInt(match[1], 10) + 1;
-  //   }
-
-  //   setNewParagraph(newParagraph + `\n\n${nextNumber}. `);
-  // };
   const handleParagraphChange = (value) => {
     setNewParagraph(value);
   };
-
-  // const modules = {
-  //   toolbar: [
-  //     [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-  //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  //     ['bold', 'italic', 'underline'],
-  //     ['link'],
-  //     [{ 'align': [] }],
-  //     ['clean']
-  //   ],
-  // };
 
   const modules = {
     toolbar: [
@@ -920,70 +826,70 @@ const DocConverter = () => {
 
       <hr style={{ border: '0', height: '1px', background: '#333', backgroundImage: 'linear-gradient(to right, #ccc, #333, #ccc)' }} />
 
-        {/* Form input for district */}
         {/* <form> */}
         <h2>SUPPLIMENTARY AFFIDAVIT FORM</h2>
-        <form style={{ maxWidth: '2000px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+
+          <form className="form-container">
+        <label>
           District:
-          <input style={{ marginLeft: '60px' }} type="text" value={district} onChange={handleDistrictChange} />
+          <input type="text" value={district} onChange={handleDistrictChange} />
         </label>
 
           {/* Input field for CMA number */}
-          <label style={{ display: 'block', marginBottom: '10px' }}>
+          <label>
           CMA Number:
-          <input  style={{ marginLeft: '50px' }}type="number" value={cmaNumber} onChange={handleCmaNumberChange} />
+          <input  type="number" value={cmaNumber} onChange={handleCmaNumberChange} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           CMA Year:
-          <input style={{ marginLeft: '60px' }} type="number" value={cmaYear} onChange={handleCmaYearChange} />
+          <input type="number" value={cmaYear} onChange={handleCmaYearChange} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           Police Station:
-          <input style={{ marginLeft: '60px' }}  type="text" value={policeStation} onChange={handlePoliceStation} />
+          <input  type="text" value={policeStation} onChange={handlePoliceStation} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           PS District: 
-          <input style={{ marginLeft: '60px' }}  type="text" value={psDistrict} onChange={handlePsDistrict} />
+          <input  type="text" value={psDistrict} onChange={handlePsDistrict} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           Applicant Name: 
-          <input style={{ marginLeft: '60px' }}  type="text" value={applicantName} onChange={handleApplicantName} />
+          <input  type="text" value={applicantName} onChange={handleApplicantName} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           Applicant Son of: 
-          <input style={{ marginLeft: '60px' }}  type="text" value={applicantSonOf} onChange={handleApplicantSonOf} />
+          <input  type="text" value={applicantSonOf} onChange={handleApplicantSonOf} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           Applicant Resident of: 
-          <input style={{ marginLeft: '60px' }}  type="text" value={applicantResidentOf} onChange={handleApplicantResidentOf} />
+          <input  type="text" value={applicantResidentOf} onChange={handleApplicantResidentOf} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           Aadhar Number:
-          <input style={{ marginLeft: '30px' }} type="text" value={aadharNo} onChange={handleAadharNoChange} maxLength={14} />
+          <input  type="text" value={aadharNo} onChange={handleAadharNoChange} maxLength={14} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           Aadhar Age:
-          <input style={{ marginLeft: '60px' }} type="number" value={aadharAge} onChange={handleAadharAge} />
+          <input type="number" value={aadharAge} onChange={handleAadharAge} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           Aadhar Person Name:
-          <input style={{ marginLeft: '60px' }}  type="text" value={aadharPersonName} onChange={handleAadharPersonName} />
+          <input type="text" value={aadharPersonName} onChange={handleAadharPersonName} />
         </label>
 
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
   Aadhar Religion:
-  <select  style={{ marginLeft: '60px' }}  value={aadharReligion} onChange={handleAadharReligion}>
+  <select  value={aadharReligion} onChange={handleAadharReligion}>
     <option value="Hindu">Hindu</option>
     <option value="Islam">Islam</option>
     <option value="Muslim">Muslim</option>
@@ -993,9 +899,9 @@ const DocConverter = () => {
   </select>
 </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
   Aadhar Occupation:
-  <select style={{ marginLeft: '60px' }}  value={aadharOccupation} onChange={handleAadharOccupation}>
+  <select  value={aadharOccupation} onChange={handleAadharOccupation}>
     <option value="Housewife">Housewife</option>
     <option value="Business">Business</option>
     <option value="Agriculture">Agriculture</option>
@@ -1006,43 +912,23 @@ const DocConverter = () => {
 </label>
 
 
-<label style={{ display: 'block', marginBottom: '10px' }}>
+<label>
           Aadhar Son Of:
-          <input style={{ marginLeft: '60px' }}  type="text" value={aadharSonOf} onChange={handleAadharSonOf} />
+          <input  type="text" value={aadharSonOf} onChange={handleAadharSonOf} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           Aadhar Resident Of:
-          <input style={{ marginLeft: '60px' }}  type="text" value={aadharResidentOf} onChange={handleAadharResidentOf} />
+          <input  type="text" value={aadharResidentOf} onChange={handleAadharResidentOf} />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        <label>
           Advocate Name:
-          <input style={{ marginLeft: '60px' }}  type="text" value={advocateName} onChange={handleAdvocateName} />
+          <input type="text" value={advocateName} onChange={handleAdvocateName} />
         </label>
 
 
-        {/* <label style={{ display: 'block', marginBottom: '10px' }}>
-        AFFIDAVIT CONTENT:
-        <textarea
-          value={newParagraph}
-          onChange={handleParagraphChange}
-          onKeyDown={handleKeyDown}
-          style={{
-            width: '100%',
-            height: '460px',
-            padding: '8px',
-            marginTop: '25px',
-            margin: '-8px',
-            fontFamily: 'Courier New',
-            fontSize: '18.5px',
-            resize: 'vertical', // Allow vertical resizing
-            border: '1px solid #ccc', // Add a border for visual clarity
-          }}
-        />
-      </label> */}
-
-      <label style={{ display: 'block', marginBottom: '10px' }}>
+      <label className="full-width-label">
         AFFIDAVIT CONTENT:
       </label>
       <ReactQuill
@@ -1051,10 +937,12 @@ const DocConverter = () => {
         modules={modules}
         style={{
           height: '460px',
+          width: '100%',
           marginBottom: '25px',
           fontFamily: 'Courier New',
           fontSize: '18.5px',
           lineHeight: '2.5px',
+          overflow: 'auto',
         }}
       />
         <style>
@@ -1063,37 +951,11 @@ const DocConverter = () => {
             font-family: 'Courier New', Courier, monospace;
             font-size: 18.5px;
             line-height: 2.5;
+            width:100%;
           }
         `}
       </style>
-
-{/* <div>
-          {newParagraphs.map((paragraph, index) => (
-            <div key={index} style={{ marginBottom: '10px' }}>
-              <label style={{ display: 'block', marginBottom: '5px' }}>
-                {index + 1}.{' '}
-                <textarea
-                  value={paragraph}
-                  onChange={(e) => handleParagraphChange(index, e.target.value)}
-                  style={{ width: '100%', height: '360px', padding: '8px', marginTop: '5px', fontFamily: 'Courier New', fontSize: '18.5px' }}
-                />
-              </label>
-              <button onClick={() => handleDeleteParagraph(index)}>Delete</button>
-            </div>
-          ))}
-          <button onClick={handleAddParagraph}>Add Paragraph</button>
-          <button onClick={handleSaveParagraphs}>Save Paragraphs</button>
-        </div> */}
-
-        
-        {/* {paragraphs.map((paragraph, index) => (
-          <div key={index} style={{ marginBottom: '10px' }}>
-            <p style={{ marginBottom: '5px' }}>{index + 1}. {paragraph}</p>
-            <button onClick={(event) => handleDeleteParagraph(index, event)}>Delete</button>
-          </div>
-        ))} */}
-      
-     
+   
 
       </form>
 
