@@ -12,6 +12,7 @@
     border-radius: 8px;
     background-color: #fff; /* White background */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    max-width : 1000px
   }
   
   /* Adjusted label styling */
