@@ -3,6 +3,11 @@ import React, { useRef } from "react";
 import { useState } from "react";
 import { saveAs } from "file-saver";
 import htmlDocx from "html-docx-js/dist/html-docx";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+//  "html-docx-js": "^0.5.2",
+ import { Document, Packer, Paragraph, TextRun, PageBreak } from 'docx';
+
 
 const DocConverter = () => {
   const contentRef = useRef();
@@ -72,9 +77,53 @@ const DocConverter = () => {
     // .replace(/\[affidavit\]/, `${newParagraph}`);
     .replace(/\[affidavit\]/, `${newParagraph.replace(/\n/g, '<br/>')}`); // Convert new lines to <br/>
 
-       const docx = htmlDocx.asBlob(updatedContent);
-       saveAs(docx, "SA_Template.docx");
-    
+      //  const docx = htmlDocx.asBlob(updatedContent);
+      //  saveAs(docx, "SA_Template.docx");
+    //   const styledContent = `
+    //   <html>
+    //     <head>
+    //       <style>
+    //         body {
+    //           font-family: 'Courier New', Courier, monospace;
+    //           font-size: 18.5px;
+    //           line-height: 2.5;
+    //         }
+    //       </style>
+    //     </head>
+    //     <body>
+    //       ${updatedContent}
+    //     </body>
+    //   </html>
+    // `;
+    const styledContent = `
+      <html>
+        <head>
+          <style>
+            body {
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 18.5px;
+              line-height: 2.5;
+            }
+            .ql-align-center {
+              text-align: center;
+            }
+            .ql-align-right {
+              text-align: right;
+            }
+            .ql-align-justify {
+              text-align: justify;
+            }
+          </style>
+        </head>
+        <body>
+          ${updatedContent}
+        </body>
+      </html>
+    `;
+
+    const docx = htmlDocx.asBlob(styledContent);
+    saveAs(docx, "SA_Template.docx");
+     
     };
 
 
@@ -121,31 +170,63 @@ const DocConverter = () => {
     //   setNewParagraph(formattedContent);
     // };
 
-  const handleParagraphChange = (event) => {
-    const inputValue = event.target.value;
-    setNewParagraph(inputValue);
+  // const handleParagraphChange = (event) => {
+  //   const inputValue = event.target.value;
+  //   setNewParagraph(inputValue);
+  // };
+
+  // const handleKeyDown = (event) => {
+  //   if (event.key === 'Enter') {
+  //     event.preventDefault();
+  //     insertNewNumberedLine();
+  //   } 
+  // };
+
+  // const insertNewNumberedLine = () => {
+  //   const lines = newParagraph.split('\n');
+  //   const lastLine = lines[lines.length - 1];
+  //   const match = lastLine.match(/^(\d+)\.\s+/);
+
+  //   let nextNumber = 1;
+  //   if (match) {
+  //     nextNumber = parseInt(match[1], 10) + 1;
+  //   }
+
+  //   setNewParagraph(newParagraph + `\n\n${nextNumber}. `);
+  // };
+  const handleParagraphChange = (value) => {
+    setNewParagraph(value);
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      insertNewNumberedLine();
-    }
+  // const modules = {
+  //   toolbar: [
+  //     [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+  //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  //     ['bold', 'italic', 'underline'],
+  //     ['link'],
+  //     [{ 'align': [] }],
+  //     ['clean']
+  //   ],
+  // };
+
+  const modules = {
+    toolbar: [
+      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      ['bold', 'italic', 'underline'],
+      ['link'],
+      [{ 'align': [] }],
+      ['clean']
+    ],
+    clipboard: {
+      matchVisual: false, // Important to disable this for single line breaks
+    },
   };
+ 
 
-  const insertNewNumberedLine = () => {
-    const lines = newParagraph.split('\n');
-    const lastLine = lines[lines.length - 1];
-    const match = lastLine.match(/^(\d+)\.\s+/);
-
-    let nextNumber = 1;
-    if (match) {
-      nextNumber = parseInt(match[1], 10) + 1;
-    }
-
-    setNewParagraph(newParagraph + `\n\n${nextNumber}. `);
-  };
-  
+  const formats = [
+    'header', 'font', 'list', 'bullet', 'bold', 'italic', 'underline', 'link', 'align'
+  ];
 
     const handleDistrictChange = (event) => {
         const value = event.target.value.toUpperCase(); // Convert input to uppercase
@@ -944,7 +1025,7 @@ const DocConverter = () => {
         </label>
 
 
-        <label style={{ display: 'block', marginBottom: '10px' }}>
+        {/* <label style={{ display: 'block', marginBottom: '10px' }}>
         AFFIDAVIT CONTENT:
         <textarea
           value={newParagraph}
@@ -954,7 +1035,7 @@ const DocConverter = () => {
             width: '100%',
             height: '460px',
             padding: '8px',
-            marginTop: '24px',
+            marginTop: '25px',
             margin: '-8px',
             fontFamily: 'Courier New',
             fontSize: '18.5px',
@@ -962,7 +1043,32 @@ const DocConverter = () => {
             border: '1px solid #ccc', // Add a border for visual clarity
           }}
         />
+      </label> */}
+
+      <label style={{ display: 'block', marginBottom: '10px' }}>
+        AFFIDAVIT CONTENT:
       </label>
+      <ReactQuill
+        value={newParagraph}
+        onChange={handleParagraphChange}
+        modules={modules}
+        style={{
+          height: '460px',
+          marginBottom: '25px',
+          fontFamily: 'Courier New',
+          fontSize: '18.5px',
+          lineHeight: '2.5px',
+        }}
+      />
+        <style>
+        {`
+          .ql-editor {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18.5px;
+            line-height: 2.5;
+          }
+        `}
+      </style>
 
 {/* <div>
           {newParagraphs.map((paragraph, index) => (
